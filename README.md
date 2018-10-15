@@ -1,8 +1,8 @@
-# ares-client-nodejs
+# @ares-dev/client-nodejs
 
 A node.js ares API helper library.
 
-[![NPM](https://nodei.co/npm/@ares-dev/arena-client-nodejs.png)](https://nodei.co/npm/@ares-dev/arena-client-nodejs/)
+[![NPM](https://nodei.co/npm/@ares-dev/client-nodejs.png)](https://nodei.co/npm/@ares-dev/client-nodejs/)
 
 
 ## End User Docs
@@ -15,7 +15,7 @@ For detailed usage information and API docs, head out here:
 ## Installation
 
 ```bash
-npm i --save @ares-dev/arena-client-nodejs
+npm i --save @ares-dev/client-nodejs
 ```
 
 ## Examples
@@ -24,7 +24,7 @@ npm i --save @ares-dev/arena-client-nodejs
 ### Include the library
 
 ```javascript
-const Ares = require('@ares-dev/arena-client-nodejs');
+const Ares = require('@ares-dev/client-nodejs');
 ```
 
 ### Query the API
