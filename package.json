@@ -1,6 +1,6 @@
 {
   "name": "@ares-dev/arena-client-nodejs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "main": "index.js",

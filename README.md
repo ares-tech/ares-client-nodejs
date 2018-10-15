@@ -29,7 +29,7 @@ const Ares = require('@ares-dev/arena-client-nodejs');
 
 ### Query the API
 
-Authenticate with your client credentials and query the API on behalf of the (your) user that is associated to those credentials. Please refer to the [API docs]((https://documenter.getpostman.com/view/5572603/RWgqUHvV)) for details on how to obtain client credentials.
+Authenticate with your client credentials and query the API on behalf of the (your) user that is associated to those credentials. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
 ```javascript
 // Setup authentication using oauth2 client credentials flow.
@@ -48,7 +48,7 @@ api.avatars.get().then(response => {
 
 ### Query the API on behalf of another user
 
-You may obtain authorization of other users, for example users of your client application, to query the API on their behalf. Please refer to the [API docs]((https://documenter.getpostman.com/view/5572603/RWgqUHvV)) for details on how to obtain client credentials.
+You may obtain authorization of other users, for example users of your client application, to query the API on their behalf. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
 Please Note that the steps 2 - 5 are only necessary to obtain initial authorization. As soon as you have obtained an access & refresh token, and are able to store those securely, you may skip directly to step 6 and let the client sdk take care of refreshing your token.
 
