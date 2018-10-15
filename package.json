@@ -1,6 +1,6 @@
 {
-  "name": "@ares-dev/arena-client-nodejs",
-  "version": "0.1.4",
+  "name": "@ares-dev/client",
+  "version": "0.1.0",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "main": "index.js",
@@ -9,6 +9,6 @@
   },
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/csares/ares-client-nodejs.git"
+    "url" : "https://github.com/csares/ares-client-javascript-nodejs.git"
   }
 }
