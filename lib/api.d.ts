@@ -1,5 +1,6 @@
+import { Config } from './interfaces';
+
 import Client = require('./client');
-import Config = require('./config');
 import Authenticator = require('./authenticator');
 import Avatars = require('./avatars');
 

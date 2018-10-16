@@ -1,9 +1,7 @@
+import { Config, Method, Response, Token } from './interfaces';
+
 import Authenticator = require('./authenticator');
-import Config = require('./config');
-import Method = require('./method');
 import Request = require('./request');
-import Response = require('./response');
-import Token = require('./token');
 
 
 declare class Client {

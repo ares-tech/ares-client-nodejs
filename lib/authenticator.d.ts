@@ -1,5 +1,4 @@
-import Config = require('./config');
-import Token = require('./token');
+import { Config, Token } from './interfaces';
 
 
 declare class Authenticator {

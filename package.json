@@ -1,15 +1,30 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.7",
+  "version": "0.1.1",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csares/ares-client-nodejs.git"
+  },
+  "keywords": [
+    "ares",
+    "arena",
+    "rest",
+    "api"
+  ],
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/csares/ares-client-nodejs.git"
-  }
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "latest"
+  },
+  "files": [
+    "lib",
+    "index.js",
+    "index.d.ts"
+  ]
 }

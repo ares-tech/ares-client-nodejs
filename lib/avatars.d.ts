@@ -1,4 +1,5 @@
-import Avatar = require('./avatar');
+import { Avatar } from './interfaces';
+
 import Client = require('./client');
 
 

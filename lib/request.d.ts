@@ -1,5 +1,4 @@
-import Method = require('./method');
-import Response = require('./response');
+import { Method, Response } from './interfaces';
 
 
 declare class Request {

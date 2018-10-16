@@ -1,5 +1,6 @@
+import { Config } from './lib/interfaces';
+
 import Api = require('./lib/api');
-import Config = require('./lib/config');
 
 
 interface Constructor<T> {
