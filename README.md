@@ -94,3 +94,22 @@ api.avatars.get().then(response => {
 ### Query the API on behalf of another user with a public client
 
 There are cases where its not possible to securely store a secret, for example in mobile or desktop applications. For those situations you may create & use *public* client credentials. Those work without a secret, however only with the authorization_code flow, as detailed above. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
+
+### Typescript
+
+The client sdk contains typescript type definitions.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+
+const api = new Api({
+  grant_type: 'client_credentials',
+  client_id: '{{client_id}}',
+  client_secret: '{{client_secret}}'
+});
+
+api.avatars.get().then(response => {
+  console.log(response);
+});
+```

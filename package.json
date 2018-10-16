@@ -1,6 +1,6 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "main": "index.js",
