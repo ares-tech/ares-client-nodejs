@@ -29,7 +29,7 @@ const Ares = require('@ares-dev/client-nodejs');
 
 ### Query the API
 
-Authenticate with your client credentials and query the API on behalf of the (your) user that is associated to those credentials. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
+Authenticate with your client credentials and query the API on behalf of the user that is associated to those credentials (typically your user). Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
 ```javascript
 // Setup authentication using oauth2 client credentials flow.
@@ -48,9 +48,9 @@ api.avatars.get().then(response => {
 
 ### Query the API on behalf of another user
 
-You may obtain authorization of other users, for example users of your client application, to query the API on their behalf. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
+You may request authorization of other users, for example users of your application, to query the API on their behalf. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
-Please Note that the steps 2 - 5 are only necessary to obtain initial authorization. As soon as you have obtained an access & refresh token, and are able to store those securely, you may skip directly to step 6 and let the client sdk take care of refreshing your token.
+Please note that the steps 2 - 5 are only necessary to initially request authorization. As soon as you have resolved an access & refresh token pair, and are able to store those securely, you may skip directly to step 6 and let the client sdk take care of refreshing your token.
 
 ```javascript
 // 1. Setup authentication using oauth2 client authorization code flow.
@@ -90,3 +90,7 @@ api.avatars.get().then(response => {
   console.log(response);
 });
 ```
+
+### Query the API on behalf of another user with a public client
+
+There are cases where its not possible to securely store a secret, for example in mobile or desktop applications. For those situations you may create & use *public* client credentials. Those work without a secret, however only with the authorization_code flow, as detailed above. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
