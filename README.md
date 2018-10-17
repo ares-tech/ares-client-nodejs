@@ -2,7 +2,7 @@
 
 A node.js ares API helper library.
 
-[![NPM](https://nodei.co/npm/@ares-dev%2Fclient-nodejs.png?downloads=true)](https://nodei.co/npm/@ares-dev%2Fclient-nodejs/)
+[![NPM](https://nodei.co/npm/@ares-dev/client-nodejs.png?downloads=true)](https://nodei.co/npm/@ares-dev/client-nodejs/)
 
 
 ## End User Docs
