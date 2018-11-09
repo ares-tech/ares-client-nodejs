@@ -188,7 +188,7 @@ const avatars = await api.avatars.get();
 
 #### Balance(chain: Chain)
 
-Resolve avatar(s) for given authorization.
+Resolve balance for given chain.
 
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
@@ -198,7 +198,7 @@ const balance = await api.wallet.balance('eth');
 
 #### Stake(chain: Chain, amount: string)
 
-Stake 15.9 ETH from 'eth' root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+Stake `15.9 ETH` from root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
@@ -208,7 +208,7 @@ const challenge = await api.wallet.stake('eth', 15900000000000000000);
 
 #### Transfer(chain: Chain, amount: string)
 
-Transfer 15.9 ETH to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+Transfer `15.9 ETH` to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
@@ -219,11 +219,6 @@ const challenge = await api.wallet.transfer('eth', 'root', '0x2b9bbd09ea584fccc9
 
 
 ### Transactions
-
-  commit(transactionId: string, transaction: TransactionHolder): Promise<string>;
-
-  signWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair): Promise<string>;
-  signWithAuthorizationUrlAndCommit(challenge: TransactionAuthorizationChallenge, callbackUrl: string): Promise<any>;
 
 #### Pending(transactionId: string)
 
@@ -237,12 +232,12 @@ const transaction = await api.transactions.pending(challenge.transactionId);
 
 #### Sign(transaction: TransactionHolder, keyPair: KeyPair)
 
-Sign a pending transaction, using per-chain matching keypair.
+Sign a pending transaction, using matching keypair.
 
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
 
-// Resolve keypair for given authorization and corresponding account password.
+// Resolve keypair for chain specified in transaction, given client authorization and corresponding account password.
 const keyPair = api.util.keyPair(transaction, 's3cr3t');
 
 // Sign transaction.
