@@ -251,7 +251,7 @@ Commit signed pending transaction using previously received authorization challe
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
 
-const signed = await api.transactions.commit(challenge.transactionId, signed);
+const transactionId = await api.transactions.commit(challenge.transactionId, signed);
 ```
 
 #### SignWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair)
@@ -261,7 +261,7 @@ Convenience method - resolves pending transaction, signs & commits. Returns id o
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
 
-const signed = await api.transactions.signWithPrivateKeyAndCommit(challenge, keyPair);
+const transactionId = await api.transactions.signWithPrivateKeyAndCommit(challenge, keyPair);
 ```
 
 #### SignWithAuthorizationUrlAndCommit(challenge: TransactionAuthorizationChallenge, callbackUrl: string)
@@ -271,5 +271,5 @@ Convenience method - If transaction has been created on behalf of another user a
 ```typescript
 import { Api } from '@ares-dev/client-nodejs';
 
-const signed = await api.transactions.signWithAuthorizationUrlAndCommit(challenge, callbackUrl);
+const transactionId = await api.transactions.signWithAuthorizationUrlAndCommit(challenge, callbackUrl);
 ```
