@@ -1,6 +1,6 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "repository": {
@@ -20,8 +20,23 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "browserify": "browserify module/index.js -o bundles/ares.standalone.js --standalone Ares"
   },
+  "dependencies": {
+    "@omisego/omg-js": "latest",
+    "bigchaindb-driver": "latest",
+    "crypto-js": "latest",
+    "crypto-browserify": "latest",
+    "ethereumjs-wallet": "latest",
+    "hdkey": "latest",
+    "open": "latest",
+    "safe-buffer": "latest",
+    "web3": "latest"
+  },
   "devDependencies": {
+    "@types/crypto-js": "latest",
+    "@types/hdkey": "latest",
     "@types/node": "latest",
+    "@types/web3": "latest",
+    "@machinomy/types-ethereumjs-wallet": "latest",
     "typescript": "latest"
   },
   "files": [

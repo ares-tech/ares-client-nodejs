@@ -8,6 +8,35 @@ export interface Avatar {
 }
 
 
+export interface Balance {
+  available: string;
+  staked: string;
+}
+
+
+export interface KeyPair {
+  publicKey: string;
+  privateKey: string;
+}
+
+
+export interface TransactionHolder {
+  chain: string;
+  scope: string;
+  value: any;
+}
+
+
+export interface TransactionAuthorizationChallenge {
+  transactionId: string;
+  authorizationUrl: string;
+}
+
+
+export type Chain = 'eth'|'bdb';
+export type Scope = 'root'|'child';
+
+
 export type GrantType = 'authorization_code'|'client_credentials';
 
 

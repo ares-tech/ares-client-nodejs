@@ -1,8 +1,12 @@
 import { Config } from './interfaces';
 
-import Client = require('./client');
 import Authenticator = require('./authenticator');
+import Client = require('./client');
+import Util = require('./util');
+
 import Avatars = require('./avatars');
+import Transactions = require('./transactions');
+import Wallet = require('./wallet');
 
 
 declare class Api {
@@ -11,7 +15,11 @@ declare class Api {
 
   auth: Authenticator;
   client: Client;
+  util: Util;
+
   avatars: Avatars;
+  transactions: Transactions;
+  wallet: Wallet;
 }
 
 

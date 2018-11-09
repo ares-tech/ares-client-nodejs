@@ -74,7 +74,8 @@ Request.prototype.resolve = function(data) {
     const request = handler.request(options, response => {
       const result = {
         status: response.statusCode,
-        body: ''
+        header: response.headers,
+        body: '',
       };
 
       response.on('data', chunk => {

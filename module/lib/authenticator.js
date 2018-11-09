@@ -12,6 +12,7 @@ function Authenticator(config) {
   this.authorizationCode = null;
 }
 
+
 Authenticator.prototype.getAuthorizationUrl = function(state) {
   const parameters = {
     response_type: 'code',
@@ -98,7 +99,7 @@ Authenticator.prototype.refresh = function() {
   });
 }
 
-Authenticator.prototype.resolve = function(request) {
+Authenticator.prototype.resolve = function(request, data) {
   const self = this;
 
   if (self.token) {
@@ -106,14 +107,14 @@ Authenticator.prototype.resolve = function(request) {
   }
 
   return new Promise(resolve => {
-    request.resolve().then(response => {
+    request.resolve(data).then(response => {
       if (401 === response.status) {
         self.refresh().then(token => {
           if (token && token.access_token) {
             request.setHeader('Authorization', token.token_type + ' ' + token.access_token);
           }
 
-          request.resolve().then(response => {
+          request.resolve(data).then(response => {
             resolve(response);
           });
         });
