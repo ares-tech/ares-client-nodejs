@@ -3,6 +3,7 @@
 
 const open = require('open');
 const querystring = require('querystring');
+const url = require('url');
 
 const ChildChain = require('@omisego/omg-js-childchain');
 const BigchainDb = require('bigchaindb-driver');
@@ -164,9 +165,17 @@ Transactions.prototype.signWithAuthorizationUrlAndCommit = function(challenge, c
     callbackUrl = window.location.href;
   }
 
-  const authorizationUrl = challenge.authorizationUrl
-    + '?'
-    + querystring.stringify({redirect_uri: callbackUrl});
+  const parsed = url.parse(challenge.authorizationUrl);
+
+  let query = {};
+  if (parsed.query) {
+    query = querystring.parse(parsed.query);
+  }
+
+  query['redirect_uri'] = callbackUrl;
+  parsed.search = '?' + querystring.stringify(query);
+
+  const authorizationUrl = url.format(parsed);
 
   return new Promise((resolve, reject) => {
     if (process.env.BROWSER) {

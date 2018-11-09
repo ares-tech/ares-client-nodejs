@@ -1,6 +1,7 @@
 'use strict';
 
 
+const atob = require('atob');
 const BigchainDb = require('bigchaindb-driver');
 const CryptoJS = require('crypto-js');
 const HDKey = require('ethereumjs-wallet/hdkey');
@@ -13,15 +14,15 @@ function Util(client) {
 
 
 Util.prototype.keyPair = function(chain, credentials) {
-  if ('bdb' === transaction.chain) {
-    return this.keyPairBigchainDb(transaction, keyPair);
+  if ('bdb' === chain) {
+    return this.keyPairBigchainDb(credentials);
   }
 
-  if ('eth' === transaction.chain) {
-    return this.keyPairEthereum(transaction, keyPair);
+  if ('eth' === chain) {
+    return this.keyPairEthereum(credentials);
   }
 
-  throw new Error("Failed to resolve keypair - unsupported chain [" + transaction.chain + "].");
+  throw new Error("Failed to resolve keypair - unsupported chain [" + chain + "].");
 }
 
 Util.prototype.keyPairBigchainDb = function(credentials) {

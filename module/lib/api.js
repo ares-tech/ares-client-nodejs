@@ -31,7 +31,7 @@ function Api(config) {
 
   this.avatars = new Avatars(this.client);
   this.transactions = new Transactions(this.client);
-  this.wallet = new Wallet(this.wallet);
+  this.wallet = new Wallet(this.client);
 }
 
 

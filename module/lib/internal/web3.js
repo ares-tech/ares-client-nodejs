@@ -1,8 +1,13 @@
 'use strict';
 
 
+const Web3 = require('web3');
+
+
 function DefaultWeb3Provider(config) {
-  if (web3 && web3.currentProvider) {
+  if ('undefined' !== typeof(web3)
+    && 'currentProvider' in web3
+    && web3.currentProvider) {
     return web3.currentProvider;
   }
 
@@ -13,7 +18,7 @@ function DefaultWeb3Provider(config) {
     config.web3_provider_url += '/';
   }
 
-  return new web3.providers.HttpProvider(config.web3_provider_url);
+  return new Web3.providers.HttpProvider(config.web3_provider_url);
 }
 
 

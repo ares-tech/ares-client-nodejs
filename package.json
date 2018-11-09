@@ -1,6 +1,6 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "repository": {
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@omisego/omg-js": "latest",
+    "atob": "latest",
     "bigchaindb-driver": "latest",
     "crypto-js": "latest",
     "crypto-browserify": "latest",
