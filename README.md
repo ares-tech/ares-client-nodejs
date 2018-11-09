@@ -159,3 +159,122 @@ api.avatars.get().then(response => {
   console.log(response);
 });
 ```
+
+
+## API
+
+
+### Chain
+
+```typescript
+type Chain = 'eth' | 'bdb';
+```
+
+
+### Avatars
+
+#### Get()
+
+Resolve avatar(s) for given authorization.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const avatars = await api.avatars.get();
+```
+
+
+### Wallet
+
+#### Balance(chain: Chain)
+
+Resolve avatar(s) for given authorization.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const balance = await api.wallet.balance('eth');
+```
+
+#### Stake(chain: Chain, amount: string)
+
+Stake 15.9 ETH from 'eth' root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const challenge = await api.wallet.stake('eth', 15900000000000000000);
+```
+
+#### Transfer(chain: Chain, amount: string)
+
+Transfer 15.9 ETH to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const challenge = await api.wallet.transfer('eth', 'root', '0x2b9bbd09ea584fccc972b069331a6ec5be390b39', 15900000000000000000, 'Optional Message');
+```
+
+
+
+### Transactions
+
+  commit(transactionId: string, transaction: TransactionHolder): Promise<string>;
+
+  signWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair): Promise<string>;
+  signWithAuthorizationUrlAndCommit(challenge: TransactionAuthorizationChallenge, callbackUrl: string): Promise<any>;
+
+#### Pending(transactionId: string)
+
+Resolve pending transaction for a previously received authorization challenge. Returns `TransactionHolder`.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const transaction = await api.transactions.pending(challenge.transactionId);
+```
+
+#### Sign(transaction: TransactionHolder, keyPair: KeyPair)
+
+Sign a pending transaction, using per-chain matching keypair.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+// Resolve keypair for given authorization and corresponding account password.
+const keyPair = api.util.keyPair(transaction, 's3cr3t');
+
+// Sign transaction.
+const signed = await api.transactions.sign(transaction, keyPair);
+```
+
+#### Commit(transactionId: string, signed: TransactionHolder)
+
+Commit signed pending transaction using previously received authorization challenge.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const signed = await api.transactions.commit(challenge.transactionId, signed);
+```
+
+#### SignWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair)
+
+Convenience method - resolves pending transaction, signs & commits. Returns id of committed transaction for underlying blockchain.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const signed = await api.transactions.signWithPrivateKeyAndCommit(challenge, keyPair);
+```
+
+#### SignWithAuthorizationUrlAndCommit(challenge: TransactionAuthorizationChallenge, callbackUrl: string)
+
+Convenience method - If transaction has been created on behalf of another user and private key is not available. Opens browser window and redirects user to an authorization page to confirm, sign & commit the transaction. On error / success, given callbackUrl is invoked accordingly with an error or the id of committed transaction.
+
+```typescript
+import { Api } from '@ares-dev/client-nodejs';
+
+const signed = await api.transactions.signWithAuthorizationUrlAndCommit(challenge, callbackUrl);
+```

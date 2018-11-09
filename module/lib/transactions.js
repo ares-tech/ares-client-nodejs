@@ -87,21 +87,21 @@ Transactions.prototype.signEthereum = function(transaction, keyPair) {
 Transactions.prototype.signEthereumChild = function(transaction, keyPair) {
   return new Promise(resolve => {
     const keys = [];
-  
+
     transaction.value.inputs.forEach(() => {
       keys.push(keyPair.privateKey);
     });
-  
+
     transaction.value.outputs.forEach(output => {
       output.amount = this.intToHex(output.amount);
     });
-  
+
     const child = new ChildChain();
-  
+
     const unsigned = child.createTransaction(transaction.value);
     const signatures = child.signTransaction(unsigned, keys);
     const signed = child.buildSignedTransaction(unsigned, signatures);
-  
+
     resolve({
       chain: transaction.chain,
       scope: transaction.scope,
@@ -114,7 +114,8 @@ Transactions.prototype.signEthereumRoot = function(transaction, keyPair) {
   return new Promise((resolve, reject) => {
     const web3 = new Web3(this.client.config.web3_provider);
 
-    web3.eth.signTransaction(transaction.value, keyPair.privateKey)
+    web3.eth.personal.unlockAccount(keyPair.publicKey, '', 100).then(() => {
+      web3.eth.signTransaction(transaction.value, keyPair.privateKey)
       .then(signed => {
         resolve({
           chain: transaction.chain,
@@ -123,12 +124,15 @@ Transactions.prototype.signEthereumRoot = function(transaction, keyPair) {
         });
       })
       .catch(reject);
+    })
+    .catch(reject);
   });
 };
 
 Transactions.prototype.commit = function(transactionId, transaction) {
   return new Promise((resolve, reject) => {
     const request = this.client.put('transactions/pending/' + transactionId);
+    request.setHeader('Content-Type', 'application/json');
 
     this.client.resolve(request, {transaction: transaction})
       .then(response => {

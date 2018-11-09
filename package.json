@@ -1,6 +1,6 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
   "repository": {
@@ -24,20 +24,19 @@
     "@omisego/omg-js": "latest",
     "atob": "latest",
     "bigchaindb-driver": "latest",
-    "crypto-js": "latest",
     "crypto-browserify": "latest",
+    "crypto-js": "latest",
     "ethereumjs-wallet": "latest",
     "hdkey": "latest",
     "open": "latest",
-    "safe-buffer": "latest",
     "web3": "latest"
   },
   "devDependencies": {
+    "@machinomy/types-ethereumjs-wallet": "latest",
     "@types/crypto-js": "latest",
     "@types/hdkey": "latest",
     "@types/node": "latest",
     "@types/web3": "latest",
-    "@machinomy/types-ethereumjs-wallet": "latest",
     "typescript": "latest"
   },
   "files": [

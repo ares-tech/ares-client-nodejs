@@ -2,10 +2,11 @@
 
 
 const atob = require('atob');
-const BigchainDb = require('bigchaindb-driver');
+const base58 = require('bs58');
+const nacl = require('tweetnacl');
+
 const CryptoJS = require('crypto-js');
-const HDKey = require('ethereumjs-wallet/hdkey');
-const SafeBuffer = require('safe-buffer');
+const HDKey = require('hdkey');
 
 
 function Util(client) {
@@ -35,12 +36,18 @@ Util.prototype.keyPairBigchainDb = function(credentials) {
   const claims = JSON.parse(atob(token.access_token.split('.')[1]));
   const seed = this.mnemonicToSeed(claims['sub'] + credentials);
 
-  return new BigchainDb.Ed25519Keypair(seed);
+  const keyPair = nacl.sign.keyPair.fromSeed(seed);
+
+  return {
+    publicKey: base58.encode(Buffer.from(keyPair.publicKey)),
+    privateKey: base58.encode(Buffer.from(keyPair.secretKey.slice(0, 32)))
+  };
 }
 
 Util.prototype.keyPairEthereum = function(credentials) {
-  const keyPair = this.keyPairBigchainDb(credentials);
-  const keyHd = HDKey.fromMasterSeed(SafeBuffer.from(keyPair.privateKey));
+  const keyPairEd25519 = this.keyPairBigchainDb(credentials);
+
+  const keyHd = HDKey.fromMasterSeed(keyPairEd25519.privateKey);
   const wallet = keyHd.getWallet();
 
   return {
@@ -57,7 +64,7 @@ Util.prototype.mnemonicToSeed = function(mnemonic) {
     {hasher: CryptoJS.algo.SHA512, keySize: 64, iterations: 2048}
   );
 
-  return this.wordArrayToByteArray(key, 32);
+  return Buffer.from(this.wordArrayToByteArray(key, 32));
 };
 
 Util.prototype.wordToByteArray = function(word, length) {
@@ -85,17 +92,17 @@ Util.prototype.wordToByteArray = function(word, length) {
 
 Util.prototype.wordArrayToByteArray = function(wordArray, length) {
   const result = [];
-  
+
   let bytes;
   let i = 0;
-  
+
   while (0 < length) {
     bytes = this.wordToByteArray(wordArray.words[i], Math.min(4, length));
     length -= bytes.length;
     result.push(bytes);
     i++;
   }
-  
+
   return new Uint8Array([].concat.apply([], result));
 };
 

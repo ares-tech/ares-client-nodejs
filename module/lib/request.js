@@ -25,7 +25,7 @@ Request.prototype.resolve = function(data) {
   const uri = url.parse(this.uri);
   const port = null === uri.port ? (0 === uri.protocol.indexOf('https') ? 443 : 80) : uri.port;
 
-  const query = {};
+  let query = {};
 
   if (uri.query) {
     query = querystring.parse(uri.query);
@@ -41,7 +41,7 @@ Request.prototype.resolve = function(data) {
   options.protocol = uri.protocol;
   options.hostname = uri.hostname;
   options.port = port;
-  options.path = uri.path;
+  options.path = uri.pathname;
 
   if (0 < Object.keys(query).length) {
     options.path += '?' + querystring.stringify(query);
