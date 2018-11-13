@@ -11,15 +11,16 @@ interface Constructor<T> {
 declare namespace Ares {
   export const Api: Constructor<Api>;
 
+  export const Chain: typeof Interfaces.Chain;
+  export const GrantType: typeof Interfaces.GrantType;
+  export const Method: typeof Interfaces.Method;
+  export const Scope: typeof Interfaces.Scope;
+
   export type Avatar = Interfaces.Avatar;
   export type Balance = Interfaces.Balance;
   export type Config = Interfaces.Config;
-  export type Chain = Interfaces.Chain;
-  export type GrantType = Interfaces.GrantType;
   export type KeyPair = Interfaces.KeyPair;
-  export type Method = Interfaces.Method;
   export type Response = Interfaces.Response;
-  export type Scope = Interfaces.Scope;
   export type Token = Interfaces.Token;
   export type TransactionAuthorizationChallenge = Interfaces.TransactionAuthorizationChallenge;
   export type TransactionHolder = Interfaces.TransactionHolder;

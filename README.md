@@ -103,7 +103,7 @@ There are cases where its not possible to securely store a secret, for example i
 Contains typescript type definitions.
 
 ```typescript
-import '@ares-dev/client-nodejs';
+import * as Ares from '@ares-dev/client-nodejs';
 
 
 const api = new Ares.Api({
@@ -120,7 +120,7 @@ const avatars = await api.avatars.get();
 Works just the same in Angular.
 
 ```typescript
-import '@ares-dev/client-nodejs';
+import * as Ares from '@ares-dev/client-nodejs';
 
 
 const api = new Ares.Api({
