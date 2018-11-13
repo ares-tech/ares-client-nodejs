@@ -252,5 +252,5 @@ const transactionId = await api.transactions.signWithPrivateKeyAndCommit(challen
 Convenience method - If transaction has been created on behalf of another user and private key is not available. Use this method to generate an authorization url that can be presented to the user for confirmation & signing. On error / success, given callbackUrl is invoked accordingly with an error or the id of committed transaction, using query parameters `error` or `transaction_id` respectively.
 
 ```typescript
-const transactionId = await api.transactions.resolveAuthorizationUrl(challenge, callbackUrl);
+const authorizationUrl = await api.transactions.resolveAuthorizationUrl(challenge, callbackUrl);
 ```
