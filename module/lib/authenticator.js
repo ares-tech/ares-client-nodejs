@@ -7,7 +7,7 @@ const nacl = require('tweetnacl');
 const querystring = require('querystring');
 
 const CryptoJS = require('crypto-js');
-const HDKey = require('hdkey');
+const HDKey = require('ethereumjs-wallet/hdkey');
 
 
 const Chain = require('./chain');
