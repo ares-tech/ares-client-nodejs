@@ -7,16 +7,18 @@ function Avatars(client) {
 
 
 Avatars.prototype.get = function() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const request = this.client.get('avatars');
 
-    this.client.resolve(request).then(response => {
-      if (200 === response.status) {
-        resolve(JSON.parse(response.body));
-      } else {
-        resolve([]);
-      }
-    });
+    this.client.resolve(request)
+      .then(response => {
+        if (200 === response.status) {
+          resolve(JSON.parse(response.body));
+        } else {
+          reject(response);
+        }
+      })
+      .catch(reject);
   });
 };
 

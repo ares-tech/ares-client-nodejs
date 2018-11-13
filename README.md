@@ -111,10 +111,10 @@ const avatars = await api.avatars.get();
 Contains typescript type definitions.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
+import '@ares-dev/client-nodejs';
 
 
-const api = new Api({
+const api = new Ares.Api({
   grant_type: 'client_credentials',
   client_id: '{{client_id}}',
   client_secret: '{{client_secret}}'
@@ -128,10 +128,10 @@ const avatars = await api.avatars.get();
 Works just the same in Angular.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
+import '@ares-dev/client-nodejs';
 
 
-const api = new Api({
+const api = new Ares.Api({
   grant_type: 'client_credentials',
   client_id: '{{client_id}}',
   client_secret: '{{client_secret}}'
@@ -163,23 +163,13 @@ api.avatars.get().then(response => {
 
 ## API
 
-
-### Chain
-
-```typescript
-type Chain = 'eth' | 'bdb';
-```
-
-
 ### Avatars
 
 #### Get()
 
-Resolve avatar(s) for given authorization.
+Resolve avatar(s) for the user we authenticated as / obtained authorization of.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const avatars = await api.avatars.get();
 ```
 
@@ -188,11 +178,9 @@ const avatars = await api.avatars.get();
 
 #### Balance(chain: Chain)
 
-Resolve balance for given chain.
+Resolve balance for given chain and the user we authenticated as / obtained authorization of.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const balance = await api.wallet.balance('eth');
 ```
 
@@ -201,9 +189,7 @@ const balance = await api.wallet.balance('eth');
 Stake `15.9 ETH` from root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
-const challenge = await api.wallet.stake('eth', 15900000000000000000);
+const challenge = await api.wallet.stake(Ares.Chain.Ethereum, 15900000000000000000);
 ```
 
 #### Transfer(chain: Chain, amount: string)
@@ -211,11 +197,8 @@ const challenge = await api.wallet.stake('eth', 15900000000000000000);
 Transfer `15.9 ETH` to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
-const challenge = await api.wallet.transfer('eth', 'root', '0x2b9bbd09ea584fccc972b069331a6ec5be390b39', 15900000000000000000, 'Optional Message');
+const challenge = await api.wallet.transfer(Ares.Chain.Ethereum, Ares.Scope.Root, '0x2b9bbd09ea584fccc972b069331a6ec5be390b39', 15900000000000000000, 'Optional Message');
 ```
-
 
 
 ### Transactions
@@ -225,20 +208,16 @@ const challenge = await api.wallet.transfer('eth', 'root', '0x2b9bbd09ea584fccc9
 Resolve pending transaction for a previously received authorization challenge. Returns `TransactionHolder`.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const transaction = await api.transactions.pending(challenge.transactionId);
 ```
 
 #### Sign(transaction: TransactionHolder, keyPair: KeyPair)
 
-Sign a pending transaction, using matching keypair.
+Sign a pending transaction using a keypair.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
-// Resolve keypair for chain specified in transaction, given client authorization and corresponding account password.
-const keyPair = api.util.keyPair(transaction, 's3cr3t');
+// Resolve keypair for chain specified in transaction, given client authorization and credentials.
+const keyPair = await api.auth.keyPair(transaction.chain, 's3cr3t');
 
 // Sign transaction.
 const signed = await api.transactions.sign(transaction, keyPair);
@@ -249,8 +228,6 @@ const signed = await api.transactions.sign(transaction, keyPair);
 Commit signed pending transaction using previously received authorization challenge.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const transactionId = await api.transactions.commit(challenge.transactionId, signed);
 ```
 
@@ -259,8 +236,6 @@ const transactionId = await api.transactions.commit(challenge.transactionId, sig
 Convenience method - resolves pending transaction, signs & commits. Returns id of committed transaction for underlying blockchain.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const transactionId = await api.transactions.signWithPrivateKeyAndCommit(challenge, keyPair);
 ```
 
@@ -269,7 +244,5 @@ const transactionId = await api.transactions.signWithPrivateKeyAndCommit(challen
 Convenience method - If transaction has been created on behalf of another user and private key is not available. Opens browser window and redirects user to an authorization page to confirm, sign & commit the transaction. On error / success, given callbackUrl is invoked accordingly with an error or the id of committed transaction.
 
 ```typescript
-import { Api } from '@ares-dev/client-nodejs';
-
 const transactionId = await api.transactions.signWithAuthorizationUrlAndCommit(challenge, callbackUrl);
 ```

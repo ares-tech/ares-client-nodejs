@@ -3,7 +3,6 @@
 
 const Authenticator = require('./authenticator');
 const Client = require('./client');
-const Util = require('./util');
 
 const Avatars = require('./avatars');
 const Transactions = require('./transactions');
@@ -27,7 +26,6 @@ function Api(config) {
 
   this.auth = new Authenticator(config);
   this.client = new Client(this.auth, config);
-  this.util = new Util(this.client);
 
   this.avatars = new Avatars(this.client);
   this.transactions = new Transactions(this.client);

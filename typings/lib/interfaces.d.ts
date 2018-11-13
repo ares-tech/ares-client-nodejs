@@ -1,5 +1,17 @@
 
 
+export enum Chain {
+  BigchainDb = 'bdb',
+  Ethereum = 'eth'
+}
+
+
+export enum Scope {
+  Root = 'root',
+  Child = 'child'
+}
+
+
 export interface Avatar {
   id?: string;
   name?: string;
@@ -21,8 +33,8 @@ export interface KeyPair {
 
 
 export interface TransactionHolder {
-  chain: string;
-  scope: string;
+  chain: Chain;
+  scope: Scope;
   value: any;
 }
 
@@ -33,11 +45,10 @@ export interface TransactionAuthorizationChallenge {
 }
 
 
-export type Chain = 'eth'|'bdb';
-export type Scope = 'root'|'child';
-
-
-export type GrantType = 'authorization_code'|'client_credentials';
+export enum GrantType {
+  AuthorizationCode = 'authorization_code',
+  ClientCredentials = 'client_credentials'
+}
 
 
 export interface Config {
@@ -53,7 +64,13 @@ export interface Config {
 }
 
 
-export type Method = 'GET'|'POST'|'PUT'|'PATCH'|'DELETE';
+export enum Method {
+  DELETE = 'DELETE',
+  GET = 'GET',
+  PATCH = 'PATCH',
+  POST = 'POST',
+  PUT = 'PUT'
+}
 
 
 export interface Response {

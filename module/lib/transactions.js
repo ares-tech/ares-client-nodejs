@@ -10,19 +10,23 @@ const BigchainDb = require('bigchaindb-driver');
 const Web3 = require('web3');
 
 
+const Chain = require('./chain');
+const Scope = require('./scope');
+
+
 function Transactions(client) {
   this.client = client;
 }
 
 
 Transactions.prototype.get = function(chain, transactionId, scope) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (!chain) {
-      chain = 'eth';
+      chain = Chain.Ethereum;
     }
 
     if (!scope) {
-      scope = 'root';
+      scope = Scope.Root;
     }
 
     const request = this.client.get('transactions'
@@ -30,40 +34,44 @@ Transactions.prototype.get = function(chain, transactionId, scope) {
       + '/' + transactionId
       + '?' + querystring.stringify({scope: scope}));
 
-    this.client.resolve(request).then(response => {
-      if (200 === response.status) {
-        resolve(JSON.parse(response.body));
-      } else {
-        resolve();
-      }
-    });
+    this.client.resolve(request)
+      .then(response => {
+        if (200 === response.status) {
+          resolve(JSON.parse(response.body));
+        } else {
+          reject(response);
+        }
+      })
+      .catch(reject);
   });
 };
 
 Transactions.prototype.pending = function(transactionId) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const request = this.client.get('transactions/pending/' + transactionId);
 
-    this.client.resolve(request).then(response => {
-      if (200 === response.status) {
-        resolve(JSON.parse(response.body));
-      } else {
-        resolve();
-      }
-    });
+    this.client.resolve(request)
+      .then(response => {
+        if (200 === response.status) {
+          resolve(JSON.parse(response.body));
+        } else {
+          reject(response);
+        }
+      })
+      .catch(reject);
   });
 };
 
 Transactions.prototype.sign = function(transaction, keyPair) {
-  if ('bdb' === transaction.chain) {
+  if (Chain.BigchainDb === transaction.chain) {
     return this.signBigchainDb(transaction, keyPair);
   }
 
-  if ('eth' === transaction.chain) {
+  if (Chain.Ethereum === transaction.chain) {
     return this.signEthereum(transaction, keyPair);
   }
 
-  throw new Error("Failed to sign transaction - unsupported chain [" + transaction.chain + "].");
+  throw new Error('Failed to sign transaction - unsupported chain [' + transaction.chain + '].');
 };
 
 Transactions.prototype.signBigchainDb = function(transaction, keyPair) {
@@ -77,7 +85,7 @@ Transactions.prototype.signBigchainDb = function(transaction, keyPair) {
 };
 
 Transactions.prototype.signEthereum = function(transaction, keyPair) {
-  if ('child' === transaction.scope) {
+  if (Scope.Child === transaction.scope) {
     return this.signEthereumChild(transaction, keyPair);
   }
 
@@ -186,9 +194,9 @@ Transactions.prototype.signWithAuthorizationUrlAndCommit = function(challenge, c
       window.location.assign(authorizationUrl);
       resolve();
     } else {
-      open(authorizationUrl, err => {
-        if (err) {
-          reject();
+      open(authorizationUrl, e => {
+        if (e) {
+          reject(e);
         } else {
           resolve();
         }
@@ -197,11 +205,11 @@ Transactions.prototype.signWithAuthorizationUrlAndCommit = function(challenge, c
   });
 };
 
-Transactions.prototype.intToHex = function(i) {
-  let hex = parseInt(i).toString(16)
+Transactions.prototype.intToHex = function(value) {
+  let hex = parseInt(value).toString(16);
 
   if (hex.length % 2) {
-    hex = '0' + hex
+    hex = '0' + hex;
   }
 
   return '0x' + hex;

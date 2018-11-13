@@ -7,6 +7,9 @@ const url = require('url');
 const querystring = require('querystring');
 
 
+const Method = require('./method');
+
+
 function Request(method, uri) {
   this.uri = uri;
   this.query = {};
@@ -49,7 +52,7 @@ Request.prototype.resolve = function(data) {
 
   var serialized = '';
 
-  if (data && 'GET' !== options.method) {
+  if (data && Method.GET !== options.method) {
     if (false === 'Content-Type' in options.headers) {
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }

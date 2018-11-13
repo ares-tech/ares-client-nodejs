@@ -1,6 +1,7 @@
 'use strict';
 
 
+const Method = require('./method');
 const Request = require('./request');
 
 
@@ -20,27 +21,27 @@ Client.prototype.request = function(method, resource) {
 }
 
 Client.prototype.delete = function(resource) {
-  return this.request('DELETE', resource);
+  return this.request(Method.DELETE, resource);
 }
 
 Client.prototype.get = function(resource) {
-  return this.request('GET', resource);
+  return this.request(Method.GET, resource);
 }
 
 Client.prototype.head = function(resource) {
-  return this.request('HEAD', resource);
+  return this.request(Method.HEAD, resource);
 }
 
 Client.prototype.patch = function(resource) {
-  return this.request('PATCH', resource);
+  return this.request(Method.PATCH, resource);
 }
 
 Client.prototype.post = function(resource) {
-  return this.request('POST', resource);
+  return this.request(Method.POST, resource);
 }
 
 Client.prototype.put = function(resource) {
-  return this.request('PUT', resource);
+  return this.request(Method.PUT, resource);
 }
 
 

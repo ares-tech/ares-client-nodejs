@@ -7,35 +7,37 @@ function Wallet(client) {
 
 
 Wallet.prototype.balance = function(chain) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (!chain) {
-      chain = 'eth';
+      chain = Chain.Ethereum;
     }
 
-    if ('bdb' === chain) {
-      throw new Error("BigchainDB is currently not supported.");
+    if (Chain.BigchainDb === chain) {
+      throw new Error('BigchainDB is currently not supported.');
     }
 
     const request = this.client.get('wallet/' + chain + '/balance');
 
-    this.client.resolve(request).then(response => {
-      if (200 === response.status) {
-        resolve(JSON.parse(response.body));
-      } else {
-        resolve([]);
-      }
-    });
+    this.client.resolve(request)
+      .then(response => {
+        if (200 === response.status) {
+          resolve(JSON.parse(response.body));
+        } else {
+          reject(response);
+        }
+      })
+      .catch(reject);
   });
 };
 
 Wallet.prototype.stake = function(chain, amount) {
   return new Promise((resolve, reject) => {
     if (!chain) {
-      chain = 'eth';
+      chain = Chain.Ethereum;
     }
 
-    if ('bdb' === chain) {
-      throw new Error("BigchainDB is currently not supported.");
+    if (Chain.BigchainDb === chain) {
+      throw new Error('BigchainDB is currently not supported.');
     }
 
     const data = {
@@ -62,11 +64,11 @@ Wallet.prototype.stake = function(chain, amount) {
 Wallet.prototype.transfer = function(chain, scope, recipient, amount, message) {
   return new Promise((resolve, reject) => {
     if (!chain) {
-      chain = 'eth';
+      chain = Chain.Ethereum;
     }
 
-    if ('bdb' === chain) {
-      throw new Error("BigchainDB is currently not supported.");
+    if (Chain.BigchainDb === chain) {
+      throw new Error('BigchainDB is currently not supported.');
     }
 
     const data = {
