@@ -1,6 +1,9 @@
 'use strict';
 
 
+const Chain = require('./chain');
+
+
 function Wallet(client) {
   this.client = client;
 }
