@@ -98,14 +98,6 @@ There are cases where its not possible to securely store a secret, for example i
 
 ## Compatibility
 
-### ES6
-
-Works with ES6 promises and async/await.
-
-```javascript
-const avatars = await api.avatars.get();
-```
-
 ### Typescript
 
 Contains typescript type definitions.
@@ -158,6 +150,14 @@ var api = new Ares.Api({
 api.avatars.get().then(response => {
   console.log(response);
 });
+```
+
+### ES6
+
+Works with ES6 promises and async/await.
+
+```javascript
+const avatars = await api.avatars.get();
 ```
 
 
