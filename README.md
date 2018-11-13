@@ -41,7 +41,7 @@ const api = new Ares.Api({
 
 
 // Resolve avatar(s) for authenticated user.
-api.avatars.get().then(response => {
+api.avatars.resolve().then(response => {
   console.log(response);
 });
 ```
@@ -62,7 +62,7 @@ const api = new Ares.Api({
 });
 
 // 2. Resolve authorization url.
-const authorizationUrl = api.auth.getAuthorizationUrl();
+const authorizationUrl = api.auth.resolveAuthorizationUrl();
 // 3. Open the authorization url in a browser and present it to the user you want to ask for authorization.
 // 4. Above configured redirect_uri will receive an authorization code if the user confirms the request.
 // 5. Exchange authorization code for an access token.
@@ -86,7 +86,7 @@ api.auth.setToken({
 });
 
 // Resolve avatar(s) for the user we obtained authorization of.
-api.avatars.get().then(response => {
+api.avatars.resolve().then(response => {
   console.log(response);
 });
 ```
@@ -112,7 +112,7 @@ const api = new Ares.Api({
   client_secret: '{{client_secret}}'
 });
 
-const avatars = await api.avatars.get();
+const avatars = await api.avatars.resolve();
 ```
 
 ### Browser / Angular
@@ -129,7 +129,7 @@ const api = new Ares.Api({
   client_secret: '{{client_secret}}'
 });
 
-const avatars = await api.avatars.get();
+const avatars = await api.avatars.resolve();
 ```
 
 ### Browser / Javascript
@@ -147,7 +147,7 @@ var api = new Ares.Api({
   client_secret: '{{client_secret}}'
 });
 
-api.avatars.get().then(response => {
+api.avatars.resolve().then(response => {
   console.log(response);
 });
 ```
@@ -157,7 +157,7 @@ api.avatars.get().then(response => {
 Works with ES6 promises and async/await.
 
 ```javascript
-const avatars = await api.avatars.get();
+const avatars = await api.avatars.resolve();
 ```
 
 
@@ -165,26 +165,26 @@ const avatars = await api.avatars.get();
 
 ### Avatars
 
-#### Get()
+#### resolve()
 
 Resolve avatar(s) for the user we authenticated as / obtained authorization of.
 
 ```typescript
-const avatars = await api.avatars.get();
+const avatars = await api.avatars.resolve();
 ```
 
 
 ### Wallet
 
-#### Balance(chain: Chain)
+#### balance(chain: Chain)
 
 Resolve balance for given chain and the user we authenticated as / obtained authorization of.
 
 ```typescript
-const balance = await api.wallet.balance('eth');
+const balance = await api.wallet.balance(Ares.Chain.Ethereum);
 ```
 
-#### Stake(chain: Chain, amount: string)
+#### stake(chain: Chain, amount: string)
 
 Stake `15.9 ETH` from root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
@@ -192,7 +192,7 @@ Stake `15.9 ETH` from root to side-chain. Amount is nominated in Wei. Returns an
 const challenge = await api.wallet.stake(Ares.Chain.Ethereum, 15900000000000000000);
 ```
 
-#### Transfer(chain: Chain, amount: string)
+#### transfer(chain: Chain, amount: string)
 
 Transfer `15.9 ETH` to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
@@ -203,15 +203,23 @@ const challenge = await api.wallet.transfer(Ares.Chain.Ethereum, Ares.Scope.Root
 
 ### Transactions
 
-#### Pending(transactionId: string)
+#### resolve(chain: Chain, transactionId: string, scope?: Scope)
+
+Resolve transaction for given chain and transaction id. Returns `TransactionHolder`.
+
+```typescript
+const transaction = await api.transactions.resolve(Ares.Chain.Ethereum, challenge.transactionId);
+```
+
+#### resolvePending(transactionId: string)
 
 Resolve pending transaction for a previously received authorization challenge. Returns `TransactionHolder`.
 
 ```typescript
-const transaction = await api.transactions.pending(challenge.transactionId);
+const transaction = await api.transactions.resolvePending(challenge.transactionId);
 ```
 
-#### Sign(transaction: TransactionHolder, keyPair: KeyPair)
+#### sign(transaction: TransactionHolder, keyPair: KeyPair)
 
 Sign a pending transaction using a keypair.
 
@@ -223,7 +231,7 @@ const keyPair = await api.auth.keyPair(transaction.chain, 's3cr3t');
 const signed = await api.transactions.sign(transaction, keyPair);
 ```
 
-#### Commit(transactionId: string, signed: TransactionHolder)
+#### commit(transactionId: string, signed: TransactionHolder)
 
 Commit signed pending transaction using previously received authorization challenge.
 
@@ -231,7 +239,7 @@ Commit signed pending transaction using previously received authorization challe
 const transactionId = await api.transactions.commit(challenge.transactionId, signed);
 ```
 
-#### SignWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair)
+#### signWithPrivateKeyAndCommit(challenge: TransactionAuthorizationChallenge, keyPair: KeyPair)
 
 Convenience method - resolves pending transaction, signs & commits. Returns id of committed transaction for underlying blockchain.
 
@@ -239,10 +247,10 @@ Convenience method - resolves pending transaction, signs & commits. Returns id o
 const transactionId = await api.transactions.signWithPrivateKeyAndCommit(challenge, keyPair);
 ```
 
-#### SignWithAuthorizationUrlAndCommit(challenge: TransactionAuthorizationChallenge, callbackUrl: string)
+#### resolveAuthorizationUrl(challenge: TransactionAuthorizationChallenge, callbackUrl: string)
 
-Convenience method - If transaction has been created on behalf of another user and private key is not available. Opens browser window and redirects user to an authorization page to confirm, sign & commit the transaction. On error / success, given callbackUrl is invoked accordingly with an error or the id of committed transaction.
+Convenience method - If transaction has been created on behalf of another user and private key is not available. Use this method to generate an authorization url that can be presented to the user for confirmation & signing. On error / success, given callbackUrl is invoked accordingly with an error or the id of committed transaction, using query parameters `error` or `transaction_id` respectively.
 
 ```typescript
-const transactionId = await api.transactions.signWithAuthorizationUrlAndCommit(challenge, callbackUrl);
+const transactionId = await api.transactions.resolveAuthorizationUrl(challenge, callbackUrl);
 ```

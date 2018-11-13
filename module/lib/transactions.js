@@ -1,7 +1,6 @@
 'use strict';
 
 
-const open = require('open');
 const querystring = require('querystring');
 const url = require('url');
 
@@ -19,7 +18,7 @@ function Transactions(client) {
 }
 
 
-Transactions.prototype.get = function(chain, transactionId, scope) {
+Transactions.prototype.resolve = function(chain, transactionId, scope) {
   return new Promise((resolve, reject) => {
     if (!chain) {
       chain = Chain.Ethereum;
@@ -46,7 +45,7 @@ Transactions.prototype.get = function(chain, transactionId, scope) {
   });
 };
 
-Transactions.prototype.pending = function(transactionId) {
+Transactions.prototype.resolvePending = function(transactionId) {
   return new Promise((resolve, reject) => {
     const request = this.client.get('transactions/pending/' + transactionId);
 
@@ -172,7 +171,7 @@ Transactions.prototype.signWithPrivateKeyAndCommit = function(challenge, keyPair
   });
 };
 
-Transactions.prototype.signWithAuthorizationUrlAndCommit = function(challenge, callbackUrl) {
+Transactions.prototype.resolveAuthorizationUrl = function(challenge, callbackUrl) {
   if (!callbackUrl && window && window.location) {
     callbackUrl = window.location.href;
   }
@@ -187,22 +186,7 @@ Transactions.prototype.signWithAuthorizationUrlAndCommit = function(challenge, c
   query['redirect_uri'] = callbackUrl;
   parsed.search = '?' + querystring.stringify(query);
 
-  const authorizationUrl = url.format(parsed);
-
-  return new Promise((resolve, reject) => {
-    if (process.env.BROWSER) {
-      window.location.assign(authorizationUrl);
-      resolve();
-    } else {
-      open(authorizationUrl, e => {
-        if (e) {
-          reject(e);
-        } else {
-          resolve();
-        }
-      });
-    }
-  });
+  return url.format(parsed);
 };
 
 Transactions.prototype.intToHex = function(value) {

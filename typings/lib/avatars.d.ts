@@ -7,7 +7,7 @@ declare class Avatars {
   constructor(client: Client);
 
 
-  get(): Promise<Avatar[]>;
+  resolve(): Promise<Avatar[]>;
 }
 
 

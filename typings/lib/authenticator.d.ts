@@ -10,13 +10,10 @@ declare class Authenticator {
   getToken(): Token;
   setToken(token: Token);
 
-  getAuthorizationUrl(state?: string): string;
+  resolveAuthorizationUrl(state?: string): string;
   exchangeAuthorizationCode(code: string): Promise<boolean>;
 
   keyPair(chain: Chain, credentials: string): Promise<KeyPair>;
-
-  keyPairBigchainDb(credentials: string): Promise<KeyPair>;
-  keyPairEthereum(credentials: string): Promise<KeyPair>;
 }
 
 

@@ -12,8 +12,7 @@ const DefaultWeb3Provider = require('./internal/web3');
 
 
 function Api(config) {
-  config.base_url = config.base_url || 'http://localhost:3000/';
-//  config.base_url = config.base_url || 'https://fad7177qfa.execute-api.eu-central-1.amazonaws.com/alpha/';
+  config.base_url = config.base_url || 'https://fad7177qfa.execute-api.eu-central-1.amazonaws.com/alpha/';
 
   if (!config.base_url.endsWith('/')) {
     config.base_url += '/';

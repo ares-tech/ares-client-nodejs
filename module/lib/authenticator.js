@@ -23,7 +23,7 @@ function Authenticator(config) {
 }
 
 
-Authenticator.prototype.getAuthorizationUrl = function(state) {
+Authenticator.prototype.resolveAuthorizationUrl = function(state) {
   const parameters = {
     response_type: 'code',
     client_id: this.config.client_id,

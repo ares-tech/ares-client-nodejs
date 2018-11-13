@@ -6,7 +6,7 @@ function Avatars(client) {
 }
 
 
-Avatars.prototype.get = function() {
+Avatars.prototype.resolve = function() {
   return new Promise((resolve, reject) => {
     const request = this.client.get('avatars');
 
