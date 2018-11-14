@@ -18,16 +18,64 @@ For detailed usage information and API docs, head out here:
 npm install --save @ares-dev/client-nodejs
 ```
 
-## Examples
+
+## Compatibility
+
+### Browser / Angular
+
+```typescript
+import * as Ares from '@ares-dev/client-nodejs';
 
 
-### Include the library
+const api = new Ares.Api();
 
-```javascript
-const Ares = require('@ares-dev/client-nodejs');
+const avatars = await api.avatars.resolve();
 ```
 
-### Query the API
+### Browser / Javascript
+
+Browserified versions for plain javascript are located at `bundles/`.
+
+```html
+<script src="bundles/ares.standalone.js"></script>
+```
+
+```javascript
+const api = new Ares.Api();
+
+api.avatars.resolve().then(response => {
+  console.log(response);
+});
+```
+
+### node.js / Javascript
+
+```typescript
+const Ares = require('@ares-dev/client-nodejs');
+
+
+const api = new Ares.Api();
+
+const avatars = await api.avatars.resolve();
+```
+
+### Typescript
+
+```typescript
+import * as Ares from '@ares-dev/client-nodejs';
+
+
+const api = new Ares.Api();
+
+const avatars = await api.avatars.resolve();
+```
+
+
+## API
+
+### Authentication
+
+#### Immediate Authentication / oauth2 Client Credentials Flow
 
 Authenticate with your client credentials and query the API on behalf of the user that is associated to those credentials (typically your user). Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
@@ -46,7 +94,7 @@ api.avatars.resolve().then(response => {
 });
 ```
 
-### Query the API on behalf of another user
+#### Intermediate Authentication / oauth2 Authorization Code Flow
 
 You may request authorization of other users, for example users of your application, to query the API on their behalf. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
@@ -91,77 +139,10 @@ api.avatars.resolve().then(response => {
 });
 ```
 
-### Query the API on behalf of another user with a public client
+#### Intermediate Authentication w/ Public Client
 
 There are cases where its not possible to securely store a secret, for example in mobile or desktop applications. For those situations you may create & use *public* client credentials. Those work without a secret, however only with the authorization_code flow, as detailed above. Please refer to the [API docs](https://documenter.getpostman.com/view/5572603/RWgqUHvV) for details on how to obtain client credentials.
 
-
-## Compatibility
-
-### Browser / Angular
-
-Works just the same in Angular.
-
-```typescript
-import * as Ares from '@ares-dev/client-nodejs';
-
-
-const api = new Ares.Api({
-  grant_type: 'client_credentials',
-  client_id: '{{client_id}}',
-  client_secret: '{{client_secret}}'
-});
-
-const avatars = await api.avatars.resolve();
-```
-
-### Browser / Javascript
-
-Browserified versions for plain javascript are located at `bundles/`.
-
-```html
-<script src="bundles/ares.standalone.js"></script>
-```
-
-```javascript
-var api = new Ares.Api({
-  grant_type: 'client_credentials',
-  client_id: '{{client_id}}',
-  client_secret: '{{client_secret}}'
-});
-
-api.avatars.resolve().then(response => {
-  console.log(response);
-});
-```
-
-### Typescript
-
-Contains typescript type definitions.
-
-```typescript
-import * as Ares from '@ares-dev/client-nodejs';
-
-
-const api = new Ares.Api({
-  grant_type: 'client_credentials',
-  client_id: '{{client_id}}',
-  client_secret: '{{client_secret}}'
-});
-
-const avatars = await api.avatars.resolve();
-```
-
-### ES6
-
-Works with ES6 promises and async/await.
-
-```javascript
-const avatars = await api.avatars.resolve();
-```
-
-
-## API
 
 ### Avatars
 
