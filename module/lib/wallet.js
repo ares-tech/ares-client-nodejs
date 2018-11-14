@@ -2,6 +2,7 @@
 
 
 const Chain = require('./chain');
+const Scope = require('./scope');
 
 
 function Wallet(client) {
@@ -9,7 +10,7 @@ function Wallet(client) {
 }
 
 
-Wallet.prototype.balance = function(chain) {
+Wallet.prototype.balance = function(chain, scope) {
   return new Promise((resolve, reject) => {
     if (!chain) {
       chain = Chain.Ethereum;
@@ -19,7 +20,11 @@ Wallet.prototype.balance = function(chain) {
       throw new Error('BigchainDB is currently not supported.');
     }
 
-    const request = this.client.get('wallet/' + chain + '/balance');
+    if (!scope) {
+      scope = Scope.Root;
+    }
+
+    const request = this.client.get('wallet/' + chain + '/balance/' + scope);
 
     this.client.resolve(request)
       .then(response => {

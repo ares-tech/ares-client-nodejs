@@ -20,12 +20,6 @@ export interface Avatar {
 }
 
 
-export interface Balance {
-  available: string;
-  staked: string;
-}
-
-
 export interface KeyPair {
   publicKey: string;
   privateKey: string;

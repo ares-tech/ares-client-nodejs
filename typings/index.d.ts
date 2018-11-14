@@ -17,7 +17,6 @@ declare namespace Ares {
   export const Scope: typeof Interfaces.Scope;
 
   export type Avatar = Interfaces.Avatar;
-  export type Balance = Interfaces.Balance;
   export type Config = Interfaces.Config;
   export type KeyPair = Interfaces.KeyPair;
   export type Response = Interfaces.Response;

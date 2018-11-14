@@ -766,6 +766,7 @@ module.exports = Transactions;
 
 
 const Chain = require('./chain');
+const Scope = require('./scope');
 
 
 function Wallet(client) {
@@ -773,7 +774,7 @@ function Wallet(client) {
 }
 
 
-Wallet.prototype.balance = function(chain) {
+Wallet.prototype.balance = function(chain, scope) {
   return new Promise((resolve, reject) => {
     if (!chain) {
       chain = Chain.Ethereum;
@@ -783,7 +784,11 @@ Wallet.prototype.balance = function(chain) {
       throw new Error('BigchainDB is currently not supported.');
     }
 
-    const request = this.client.get('wallet/' + chain + '/balance');
+    if (!scope) {
+      scope = Scope.Root;
+    }
+
+    const request = this.client.get('wallet/' + chain + '/balance/' + scope);
 
     this.client.resolve(request)
       .then(response => {
@@ -865,7 +870,7 @@ Wallet.prototype.transfer = function(chain, scope, recipient, amount, message) {
 
 module.exports = Wallet;
 
-},{"./chain":5}],14:[function(require,module,exports){
+},{"./chain":5,"./scope":11}],14:[function(require,module,exports){
 (function (global,Buffer){
 /*
 Copyright 2018 OmiseGO Pte Ltd

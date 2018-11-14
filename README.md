@@ -98,23 +98,6 @@ There are cases where its not possible to securely store a secret, for example i
 
 ## Compatibility
 
-### Typescript
-
-Contains typescript type definitions.
-
-```typescript
-import * as Ares from '@ares-dev/client-nodejs';
-
-
-const api = new Ares.Api({
-  grant_type: 'client_credentials',
-  client_id: '{{client_id}}',
-  client_secret: '{{client_secret}}'
-});
-
-const avatars = await api.avatars.resolve();
-```
-
 ### Browser / Angular
 
 Works just the same in Angular.
@@ -152,6 +135,23 @@ api.avatars.resolve().then(response => {
 });
 ```
 
+### Typescript
+
+Contains typescript type definitions.
+
+```typescript
+import * as Ares from '@ares-dev/client-nodejs';
+
+
+const api = new Ares.Api({
+  grant_type: 'client_credentials',
+  client_id: '{{client_id}}',
+  client_secret: '{{client_secret}}'
+});
+
+const avatars = await api.avatars.resolve();
+```
+
 ### ES6
 
 Works with ES6 promises and async/await.
@@ -176,17 +176,21 @@ const avatars = await api.avatars.resolve();
 
 ### Wallet
 
-#### balance(chain: Chain)
+#### balance(chain: Chain, scope?: Scope)
 
 Resolve balance for given chain and the user we authenticated as / obtained authorization of.
 
 ```typescript
+// Root-chain balance
 const balance = await api.wallet.balance(Ares.Chain.Ethereum);
+
+// Staked / child-chain balance
+const balance = await api.wallet.balance(Ares.Chain.Ethereum, Ares.Scope.Child);
 ```
 
 #### stake(chain: Chain, amount: string)
 
-Stake `15.9 ETH` from root to side-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+Stake `15.9 ETH` from root to child-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
 const challenge = await api.wallet.stake(Ares.Chain.Ethereum, 15900000000000000000);
