@@ -188,14 +188,6 @@ const challenge = await api.wallet.transfer(Ares.Chain.Ethereum, Ares.Scope.Root
 
 ### Transactions
 
-#### resolve(chain: Chain, transactionId: string, scope?: Scope)
-
-Resolve transaction for given chain and transaction id. Returns `TransactionHolder`.
-
-```typescript
-const transaction = await api.transactions.resolve(Ares.Chain.Ethereum, challenge.transactionId);
-```
-
 #### resolvePending(transactionId: string)
 
 Resolve pending transaction for a previously received authorization challenge. Returns `TransactionHolder`.
@@ -238,4 +230,12 @@ Convenience method - If transaction has been created on behalf of another user a
 
 ```typescript
 const authorizationUrl = await api.transactions.resolveAuthorizationUrl(challenge, callbackUrl);
+```
+
+#### resolve(chain: Chain, transactionId: string, scope?: Scope)
+
+Resolve transaction for given chain and transaction id. Returns `TransactionHolder`.
+
+```typescript
+const transaction = await api.transactions.resolve(Ares.Chain.Ethereum, transactionId);
 ```
