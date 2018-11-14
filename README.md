@@ -190,7 +190,7 @@ const balance = await api.wallet.balance(Ares.Chain.Ethereum, Ares.Scope.Child);
 
 #### stake(chain: Chain, amount: string)
 
-Stake `15.9 ETH` from root to child-chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+Stake `15.9 ETH` from root to child-chain. Amount is denominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
 const challenge = await api.wallet.stake(Ares.Chain.Ethereum, 15900000000000000000);
@@ -198,7 +198,7 @@ const challenge = await api.wallet.stake(Ares.Chain.Ethereum, 159000000000000000
 
 #### transfer(chain: Chain, amount: string)
 
-Transfer `15.9 ETH` to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Amount is nominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
+Transfer `15.9 ETH` to `0x2b9bbd09ea584fccc972b069331a6ec5be390b39` on root chain. Amount is denominated in Wei. Returns an authorization challenge `TransactionAuthorizationChallenge`.
 
 ```typescript
 const challenge = await api.wallet.transfer(Ares.Chain.Ethereum, Ares.Scope.Root, '0x2b9bbd09ea584fccc972b069331a6ec5be390b39', 15900000000000000000, 'Optional Message');
