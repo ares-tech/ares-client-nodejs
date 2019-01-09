@@ -1,8 +1,9 @@
 {
   "name": "@ares-dev/client-nodejs",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "description": "ares API Client SDK",
   "author": "Ares Tech GmbH",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/ares-tech/ares-client-nodejs.git"
